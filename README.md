@@ -1,8 +1,8 @@
-# INGRES — Groundwater Intelligence
+# Medhira — Groundwater Intelligence
 
 > **An AI-powered groundwater intelligence and visualization platform for exploring, analyzing, and comparing groundwater resources across India.**
 
-INGRES (Groundwater Intelligence) provides an interactive interface for exploring groundwater data across India's administrative hierarchy — from **India → State → District → Block**.
+Medhira (Groundwater Intelligence) provides an interactive interface for exploring groundwater data across India's administrative hierarchy — from **India → State → District → Block**.
 
 The platform combines data from the **INGRES/CGWB-IITH groundwater portal** with AI-powered analysis through **Groq-hosted large language models**, allowing users to explore groundwater availability, extraction, recharge, rainfall, and water-stress indicators through interactive visualizations and natural-language queries.
 
@@ -10,15 +10,18 @@ The platform combines data from the **INGRES/CGWB-IITH groundwater portal** with
 
 ## Features
 
+**Medhira Dashboard** is the main user-facing application for exploring and analyzing groundwater intelligence.
+
 ### Interactive Groundwater Explorer
 
 Navigate through India's groundwater data using a hierarchical interface:
 
-```text
+```
 India
  └── State
       └── District
            └── Block
+
 ```
 
 Data is loaded dynamically as locations are expanded, avoiding the need to load the entire dataset at once.
@@ -108,18 +111,18 @@ This reduces unnecessary API requests while navigating between locations during 
 
 ## Technology Stack
 
-| Technology | Purpose |
-|---|---|
-| React 18 | Frontend framework |
-| JavaScript | Application development |
-| React Scripts | Development and production tooling |
-| Chart.js | Data visualization |
-| D3.js | Geographic/data visualization utilities |
-| Groq API | AI-powered groundwater analysis |
-| Llama 3.3 70B | Default AI model |
-| INGRES API | Groundwater data source |
-| Session Storage | Client-side data caching |
-| Local Storage | Local API key/model configuration |
+| TechnologyPurpose |                                         |
+| ----------------- | --------------------------------------- |
+| React 18          | Frontend framework                      |
+| JavaScript        | Application development                 |
+| React Scripts     | Development and production tooling      |
+| Chart.js          | Data visualization                      |
+| D3.js             | Geographic/data visualization utilities |
+| Groq API          | AI-powered groundwater analysis         |
+| Llama 3.3 70B     | Default AI model                        |
+| INGRES API        | Groundwater data source                 |
+| Session Storage   | Client-side data caching                |
+| Local Storage     | Local API key/model configuration       |
 
 ---
 
@@ -127,32 +130,9 @@ This reduces unnecessary API requests while navigating between locations during 
 
 The application is primarily a React single-page application.
 
-```text
-                         ┌──────────────────────┐
-                         │      INGRES UI       │
-                         │       React          │
-                         └──────────┬───────────┘
-                                    │
-                  ┌─────────────────┼─────────────────┐
-                  │                 │                 │
-                  ▼                 ▼                 ▼
-          ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-          │ INGRES API   │  │   Groq API   │  │ Session      │
-          │ Groundwater  │  │ AI Analysis  │  │ Storage      │
-          │    Data      │  │              │  │ Cache        │
-          └──────────────┘  └──────────────┘  └──────────────┘
-                  │                 │
-                  ▼                 ▼
-          Groundwater Data    Natural Language
-                              Analysis
-                  │                 │
-                  └────────┬────────┘
-                           ▼
-                 ┌─────────────────────┐
-                 │ Charts / Map / Chat │
-                 │   / Comparisons     │
-                 └─────────────────────┘
-```
+![Medhira Architecture](docs/architecture.png)
+
+The architecture above shows how the Medhira Dashboard connects the React interface with the INGRES groundwater API, Groq-powered AI analysis, and browser-based caching to provide charts, maps, chat, and location comparisons.
 
 ---
 
@@ -176,7 +156,7 @@ The application then parses the response to identify summary records and child a
 
 ## AI Analysis
 
-INGRES uses the **Groq API** to provide natural-language groundwater analysis.
+Medhira uses the **Groq API** to provide natural-language groundwater analysis.
 
 The application constructs a system prompt containing:
 
@@ -199,26 +179,27 @@ The application currently provides the following model options:
 
 The default model is:
 
-```text
+```
 llama-3.3-70b-versatile
+
 ```
 
 ### Groundwater Classification
 
 The AI analysis follows the following groundwater extraction classification:
 
-| Stage of Extraction | Classification |
-|---:|---|
-| < 70% | Safe |
-| 70–90% | Semi-Critical |
-| 90–100% | Critical |
-| > 100% | Over-Exploited |
+| Stage of ExtractionClassification |                |
+| --------------------------------- | -------------- |
+| < 70%                             | Safe           |
+| 70–90%                            | Semi-Critical  |
+| 90–100%                           | Critical       |
+| > 100%                            | Over-Exploited |
 
 ---
 
 ## Project Structure
 
-```text
+```
 Medhira-INGRESS/
 │
 ├── public/
@@ -251,6 +232,7 @@ Medhira-INGRESS/
 ├── .gitignore
 ├── package.json
 └── package-lock.json
+
 ```
 
 ---
@@ -278,8 +260,9 @@ Provides hierarchical navigation through groundwater locations.
 
 Users can expand locations and drill down from:
 
-```text
+```
 India → State → District → Block
+
 ```
 
 ### `ChatArea.jsx`
@@ -360,47 +343,53 @@ Make sure you have the following installed:
 
 ### 1. Clone the Repository
 
-```bash
+```
 git clone <repository-url>
 cd Medhira-INGRESS
+
 ```
 
 ### 2. Install Dependencies
 
-```bash
+```
 npm install
+
 ```
 
 ### 3. Start the Development Server
 
-```bash
+```
 npm start
+
 ```
 
 The application will start on the local development server, typically:
 
-```text
+```
 http://localhost:3000
+
 ```
 
 ---
 
 ## Configuring the AI
 
-On the first launch, INGRES displays an API key configuration dialog.
+On the first launch, Medhira displays an API key configuration dialog.
 
 Enter your **Groq API key** and select the desired AI model.
 
 The API key is stored in the browser's local storage:
 
-```text
+```
 groq_key
+
 ```
 
 The selected model is stored as:
 
-```text
+```
 groq_model
+
 ```
 
 > **Security note:** This application currently communicates with Groq directly from the browser. The API key is therefore available to the client-side application. For a production deployment, API requests should ideally be routed through a secure backend so that secret API credentials are not exposed to users.
@@ -411,14 +400,16 @@ groq_model
 
 Create an optimized production build with:
 
-```bash
+```
 npm run build
+
 ```
 
 The generated production files will be placed in:
 
-```text
+```
 build/
+
 ```
 
 These files can be deployed to a static hosting provider.
@@ -431,7 +422,7 @@ These files can be deployed to a static hosting provider.
 
 The user starts at the India level and can expand the administrative hierarchy.
 
-```text
+```
 INDIA
    ↓
 STATE
@@ -439,6 +430,7 @@ STATE
 DISTRICT
    ↓
 BLOCK
+
 ```
 
 ### 2. Fetch Groundwater Data
@@ -491,16 +483,16 @@ The application includes predefined prompts for common groundwater analysis task
 
 The application currently supports the following primary metrics:
 
-| Metric | Unit |
-|---|---|
-| Stage of Extraction | % |
+| MetricUnit               |     |
+| ------------------------ | --- |
+| Stage of Extraction      | %   |
 | Groundwater Availability | ham |
-| Total Draft | ham |
-| Total Recharge | ham |
-| Future Availability | ham |
-| Rainfall | mm |
-| Agriculture Draft | ham |
-| Domestic Draft | ham |
+| Total Draft              | ham |
+| Total Recharge           | ham |
+| Future Availability      | ham |
+| Rainfall                 | mm  |
+| Agriculture Draft        | ham |
+| Domestic Draft           | ham |
 
 `ham` refers to **hectare-metre**, a unit commonly used for measuring volumes of water.
 
@@ -514,18 +506,20 @@ INGRES uses browser storage for two purposes.
 
 Used for persistent configuration:
 
-```text
+```
 groq_key
 groq_model
+
 ```
 
 ### Session Storage
 
 Used for groundwater/location caching:
 
-```text
+```
 nodeCache
 <locationUUID>_<year>
+
 ```
 
 This allows previously retrieved data to be reused during a session without repeatedly requesting the same information from the API.
@@ -609,6 +603,6 @@ Additional technologies used in the project include:
 
 ## Project Goal
 
-INGRES aims to make complex groundwater datasets easier to **explore, understand, compare, and analyze**.
+Medhira aims to make complex groundwater datasets easier to **explore, understand, compare, and analyze**.
 
 By combining structured groundwater data, interactive geographic navigation, data visualization, and natural-language AI analysis, the platform provides a more accessible way to investigate groundwater conditions across India.
